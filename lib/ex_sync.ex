@@ -3,11 +3,13 @@ defmodule ExSync do
 
   alias ExSync.{Shadow, Edit, Storage}
 
-  def diff_patch, do: Application.get_env(:ex_sync, :diff_patch)
-
   @moduledoc """
   This module implements the main parts of the server-side flow of the
   Diff Sync algorithm.
+
+  The main function here is [sync cycle](#sync_cycle/5), which does a full
+  cycle given the object id, shadow, backup shadow, edits and the storage
+  adapter.
   """
 
   @type id :: any
@@ -15,7 +17,11 @@ defmodule ExSync do
   @type error :: (atom | map)
 
   @doc """
-  The Diff Cycle. Takes changes from the client (can be empty) and
+  The Diff Cycle. Takes changes from the client (can be an empty list) and
+  applies them to the shadow.
+
+  Updates the doc using `ExSync.Storage.get_and_update/2` and returns the new
+  shadow as well as any edits between the shadow and the doc.
   """
 
   @spec sync_cycle(any, Shadow.t, Shadow.t, [Edit.t], Storage) ::
@@ -163,4 +169,8 @@ defmodule ExSync do
       {:error, reason} -> {:error, reason}
     end
   end
+
+  @doc false
+  def diff_patch, do: Application.get_env(:ex_sync, :diff_patch)
+
 end
