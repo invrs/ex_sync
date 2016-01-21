@@ -1,4 +1,4 @@
-defmodule Exsync.JSONDPSocketAdapter do
+defmodule ExSync.JSONDPSocketAdapter do
   use Connection
 
   alias :gen_tcp, as: TCP

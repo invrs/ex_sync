@@ -1,4 +1,4 @@
-defmodule Exsync.Store do
+defmodule ExSync.Store do
   @moduledoc """
   Specification for Exsync Stores. Stores are being used to save and retrieve
   Server Documents

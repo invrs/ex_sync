@@ -1,9 +1,9 @@
-defmodule Exsync do
+defmodule ExSync do
   require Logger
 
-  alias Exsync.{Shadow, Edit, Storage}
+  alias ExSync.{Shadow, Edit, Storage}
 
-  def diff_patch, do: Application.get_env(:exsync, :diff_patch)
+  def diff_patch, do: Application.get_env(:ex_sync, :diff_patch)
 
   @moduledoc """
   This module implements the main parts of the server-side flow of the
@@ -30,8 +30,8 @@ defmodule Exsync do
   @doc """
   This function patches the server_shadow or backup_shadow with edits.
 
-  Expects server_shadow and backup_shadow as type Exsync.Shadow,
-  edits as a List of Exsync.Edit.
+  Expects server_shadow and backup_shadow as type ExSync.Shadow,
+  edits as a List of ExSync.Edit.
   """
   @spec patch_shadows(Shadow.t, Shadow.t, [Edit.t]) ::
     {:ok, Shadow.t} | {:error, error}
@@ -50,8 +50,8 @@ defmodule Exsync do
   @doc """
   This function patches the server doc.
 
-  It expects a storage adapter that implements the Exsync.Storage behaviour,
-  an id and a list of edits as Exsync.Edit.
+  It expects a storage adapter that implements the ExSync.Storage behaviour,
+  an id and a list of edits as ExSync.Edit.
 
   It will use the `get_and_update/2` function of the storage, passing it a
   function to apply the edits to the server doc. That way we can use locks

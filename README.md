@@ -1,4 +1,4 @@
-# Exsync
+# ExSync
 
 A suite of Elixir libraries for a Diff Sync backend.
 
