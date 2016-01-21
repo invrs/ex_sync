@@ -1,0 +1,340 @@
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.11.3">
+    <title>ExSync – ex_sync v0.0.1</title>
+    <link rel="stylesheet" href="dist/app-ddd9717ad9.css" />
+    <script src="dist/sidebar_items.js"></script>
+  </head>
+  <body data-type="modules">
+
+    <div class="main">
+<button class="sidebar-toggle">
+  <i class="icon-menu"></i>
+</button>
+<section class="sidebar">
+  <button class="sidebar-toggle">
+    <i class="icon-menu"></i>
+  </button>
+
+  
+  <a href="api-reference.html" class="sidebar-projectLink">
+    <div class="sidebar-projectDetails">
+      <h1 class="sidebar-projectName">
+        ex_sync
+      </h1>
+      <h2 class="sidebar-projectVersion">
+        v0.0.1
+      </h2>
+    </div>
+    
+  </a>
+
+  <div class="sidebar-search">
+    <i class="icon-search"></i>
+    <input type="text" class="sidebar-searchInput" placeholder="search" autocomplete="off" />
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+    
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+    
+
+    
+
+    
+  </ul>
+
+  <ul id="full-list" class="sidebar-fullList"></ul>
+  <div class="sidebar-noResults"></div>
+</section>
+
+<section class="content">
+  <div id="content" class="content-inner">
+
+
+      <h1>
+        <small class="visible-xs">ex_sync v0.0.1</small>
+        ExSync
+        
+        
+      </h1>
+
+      
+        <section id="moduledoc" class="docstring">
+          <p>This module implements the main parts of the server-side flow of the
+Diff Sync algorithm.</p>
+
+        </section>
+      
+
+      
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <i class="icon-link"></i>
+            </a>
+            Summary
+          </h1>
+          
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:document/0">document()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:error/0">error()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:id/0">id()</a>
+  </div>
+  
+</div>
+
+  </div>
+
+
+          
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+    <div class="summary-row">
+  <div class="summary-signature">
+    <a href="#diff_patch/0">diff_patch()</a>
+  </div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_server_doc_edits/2">get_server_doc_edits(server_shadow, doc)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>Calculates the difference between the server shadow and the server doc</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#patch_server_doc/3">patch_server_doc(storage_adapter, id, edits)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>This function patches the server doc</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#patch_shadows/3">patch_shadows(server_shadow, backup_shadow, edits)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>This function patches the server_shadow or backup_shadow with edits</p>
+</div>
+  
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#sync_cycle/5">sync_cycle(id, shadow, backup_shadow, edits, storage)</a>
+  </div>
+  
+    <div class="summary-synopsis"><p>The Diff Cycle. Takes changes from the client (can be empty) and</p>
+</div>
+  
+</div>
+
+  </div>
+
+
+          
+
+          
+
+        </section>
+      
+
+      
+        <section id="types" class="types details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <i class="icon-link"></i>
+            </a>
+            Types
+          </h1>
+          <div class="types-list">
+            <div id="t:document/0" class="type-detail">
+  <pre><code class="elixir"><a href="#t:document/0">document</a> :: map</code></pre>
+  
+</div>
+<div id="t:error/0" class="type-detail">
+  <pre><code class="elixir"><a href="#t:error/0">error</a> :: atom | map</code></pre>
+  
+</div>
+<div id="t:id/0" class="type-detail">
+  <pre><code class="elixir"><a href="#t:id/0">id</a> :: any</code></pre>
+  
+</div>
+
+          </div>
+        </section>
+      
+
+      
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <i class="icon-link"></i>
+            </a>
+            Functions
+          </h1>
+          <div class="detail" id="diff_patch/0">
+  <div class="detail-header">
+    <a href="#diff_patch/0" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">diff_patch()</span>
+      
+  </div>
+  
+  <section class="docstring">
+    
+  </section>
+</div>
+<div class="detail" id="get_server_doc_edits/2">
+  <div class="detail-header">
+    <a href="#get_server_doc_edits/2" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">get_server_doc_edits(server_shadow, doc)</span>
+      
+  </div>
+  
+  <section class="docstring">
+    <p>Calculates the difference between the server shadow and the server doc.</p>
+<p>Returns the new edits as a list of one item as well as the server shadow with
+an updated server_version number (if applicable).</p>
+
+  </section>
+</div>
+<div class="detail" id="patch_server_doc/3">
+  <div class="detail-header">
+    <a href="#patch_server_doc/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">patch_server_doc(storage_adapter, id, edits)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">patch_server_doc(atom, any, [ExSync.Edit.t]) ::
+  {:ok, <a href="#t:document/0">document</a>} |
+  {:error, <a href="#t:error/0">error</a>}</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>This function patches the server doc.</p>
+<p>It expects a storage adapter that implements the ExSync.Storage behaviour,
+an id and a list of edits as ExSync.Edit.</p>
+<p>It will use the <code class="inline">get_and_update/2</code> function of the storage, passing it a
+function to apply the edits to the server doc. That way we can use locks
+in the function to ensure data consistency between reading and writing.</p>
+
+  </section>
+</div>
+<div class="detail" id="patch_shadows/3">
+  <div class="detail-header">
+    <a href="#patch_shadows/3" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">patch_shadows(server_shadow, backup_shadow, edits)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">patch_shadows(<a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>, <a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>, [ExSync.Edit.t]) ::
+  {:ok, <a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>} |
+  {:error, <a href="#t:error/0">error</a>}</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>This function patches the server_shadow or backup_shadow with edits.</p>
+<p>Expects server_shadow and backup_shadow as type ExSync.Shadow,
+edits as a List of ExSync.Edit.</p>
+
+  </section>
+</div>
+<div class="detail" id="sync_cycle/5">
+  <div class="detail-header">
+    <a href="#sync_cycle/5" class="detail-link" title="Link to this function">
+      <i class="icon-link"></i>
+    </a>
+    <span class="signature">sync_cycle(id, shadow, backup_shadow, edits, storage)</span>
+      
+  </div>
+  
+    <div class="specs">
+      <h4 class="specs-title">Specs</h4>
+      <div class="specs-list">
+        
+          <pre><code class="elixir">sync_cycle(any, <a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>, <a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>, [ExSync.Edit.t], ExSync.Storage) ::
+  {:ok, <a href="ExSync.Shadow.html#t:t/0">ExSync.Shadow.t</a>, [ExSync.Edit.t]} |
+  {:error, <a href="#t:error/0">error</a>}</code></pre>
+        
+      </div>
+    </div>
+  
+  <section class="docstring">
+    <p>The Diff Cycle. Takes changes from the client (can be empty) and</p>
+
+  </section>
+</div>
+
+        </section>
+      
+
+      
+
+      
+        <footer class="footer">
+      <p>
+        <span class="line">
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" rel="help" target="_blank">ExDoc</a> (v0.11.3),
+        </span>
+        <span class="line">
+          designed by
+          <a href="https://twitter.com/dignifiedquire" target="_blank" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+      </p>
+      <button class="night-mode-toggle" />
+    </footer>
+  </div>
+</section>
+</div>
+  <script src="dist/app-6d2e071366.js"></script>
+  </body>
+</html>
+
