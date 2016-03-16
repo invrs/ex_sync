@@ -69,6 +69,9 @@
         <section id="moduledoc" class="docstring">
           <p>This module implements the main parts of the server-side flow of the
 Diff Sync algorithm.</p>
+<p>The main function here is <a href="#sync_cycle/5">sync cycle</a>, which does a full
+cycle given the object id, shadow, backup shadow, edits and the storage
+adapter.</p>
 
         </section>
       
@@ -115,12 +118,6 @@ Diff Sync algorithm.</p>
     </h2>
     <div class="summary-row">
   <div class="summary-signature">
-    <a href="#diff_patch/0">diff_patch()</a>
-  </div>
-  
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#get_server_doc_edits/2">get_server_doc_edits(server_shadow, doc)</a>
   </div>
   
@@ -151,7 +148,8 @@ Diff Sync algorithm.</p>
     <a href="#sync_cycle/5">sync_cycle(id, shadow, backup_shadow, edits, storage)</a>
   </div>
   
-    <div class="summary-synopsis"><p>The Diff Cycle. Takes changes from the client (can be empty) and</p>
+    <div class="summary-synopsis"><p>The Diff Cycle. Takes changes from the client (can be an empty list) and
+applies them to the shadow</p>
 </div>
   
 </div>
@@ -200,20 +198,7 @@ Diff Sync algorithm.</p>
             </a>
             Functions
           </h1>
-          <div class="detail" id="diff_patch/0">
-  <div class="detail-header">
-    <a href="#diff_patch/0" class="detail-link" title="Link to this function">
-      <i class="icon-link"></i>
-    </a>
-    <span class="signature">diff_patch()</span>
-      
-  </div>
-  
-  <section class="docstring">
-    
-  </section>
-</div>
-<div class="detail" id="get_server_doc_edits/2">
+          <div class="detail" id="get_server_doc_edits/2">
   <div class="detail-header">
     <a href="#get_server_doc_edits/2" class="detail-link" title="Link to this function">
       <i class="icon-link"></i>
@@ -307,7 +292,10 @@ edits as a List of ExSync.Edit.</p>
     </div>
   
   <section class="docstring">
-    <p>The Diff Cycle. Takes changes from the client (can be empty) and</p>
+    <p>The Diff Cycle. Takes changes from the client (can be an empty list) and
+applies them to the shadow.</p>
+<p>Updates the doc using <code class="inline">ExSync.Storage.get_and_update/2</code> and returns the new
+shadow as well as any edits between the shadow and the doc.</p>
 
   </section>
 </div>
