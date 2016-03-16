@@ -1,8 +1,9 @@
 defmodule ExSync.Shadow do
-  defstruct doc: %{}, clientVersion: 0, serverVersion: 0
+  defstruct doc: %{}, client_version: 0, server_version: 0
+
   @type t :: %__MODULE__{
     doc: Map.t,
-    clientVersion: Integer.t,
-    serverVersion: Integer.t
+    client_version: Integer.t,
+    server_version: Integer.t
   }
 end
