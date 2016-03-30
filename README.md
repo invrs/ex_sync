@@ -13,7 +13,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   1. Add exsync to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:exsync, "~> 0.0.1"}]
+          [{:exsync, "~> 0.0.3"}]
         end
 
   2. Ensure exsync is started before your application:
