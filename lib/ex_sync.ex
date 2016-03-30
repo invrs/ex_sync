@@ -172,5 +172,4 @@ defmodule ExSync do
 
   @doc false
   def diff_patch, do: Application.get_env(:ex_sync, :diff_patch)
-
 end

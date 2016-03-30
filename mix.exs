@@ -13,7 +13,10 @@ defmodule ExSync.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [
+      mod: {ExSync.Application, []},
+      applications: [:logger]
+    ]
   end
 
   def description do
@@ -39,6 +42,7 @@ defmodule ExSync.Mixfile do
   defp deps do
     [
       {:connection, "~> 1.0"},
+      {:poolboy, "~> 1.5"},
 
       {:earmark, "~> 0.2", only: :dev},
       {:ex_doc, "~> 0.11", only: :dev},

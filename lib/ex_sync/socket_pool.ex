@@ -10,7 +10,7 @@ defmodule ExSync.SocketPool do
   def init([]) do
     pool_opts = [
       name: {:local, @pool_name},
-      worker_module: Exsync.JSONDPSocketAdapter,
+      worker_module: ExSync.JSONDPSocketAdapter,
       size: 10,
       max_overflow: 1000,
     ]
@@ -24,13 +24,13 @@ defmodule ExSync.SocketPool do
 
   def patch(doc, edit) do
     :poolboy.transaction @pool_name, fn(socket_adapter) ->
-      Exsync.JSONDPSocketAdapter.patch(doc, edit, socket_adapter)
+      ExSync.JSONDPSocketAdapter.patch(doc, edit, socket_adapter)
     end
   end
 
   def diff(origin, new) do
     :poolboy.transaction @pool_name, fn(socket_adapter) ->
-      Exsync.JSONDPSocketAdapter.diff(origin, new, socket_adapter)
+      ExSync.JSONDPSocketAdapter.diff(origin, new, socket_adapter)
     end
   end
 end

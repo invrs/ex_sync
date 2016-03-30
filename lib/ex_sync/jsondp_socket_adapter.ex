@@ -83,9 +83,10 @@ defmodule ExSync.JSONDPSocketAdapter do
     {:reply, {:error, :closed}, state}
   end
   def handle_call({:send, method, params}, _from, state = %{socket: socket}) do
+    id = :crypto.strong_rand_bytes(24) |> Base.encode16
     payload =
       Poison.encode! %{
-        id: Ecto.UUID.generate,
+        id: id,
         method: method,
         params: params
       }
