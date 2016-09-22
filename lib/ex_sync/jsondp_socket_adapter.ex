@@ -1,4 +1,4 @@
-defmodule ExSync.JSONDPSocketAdapter do
+defmodule DiffSync.JSONDPSocketAdapter do
   use Connection
 
   alias :gen_tcp, as: TCP
@@ -83,18 +83,18 @@ defmodule ExSync.JSONDPSocketAdapter do
     {:reply, {:error, :closed}, state}
   end
   def handle_call({:send, method, params}, _from, state = %{socket: socket}) do
-    id = :crypto.strong_rand_bytes(24) |> Base.encode16
     payload =
       Poison.encode! %{
-        id: id,
+        id: Ecto.UUID.generate,
         method: method,
         params: params
       }
 
-    case TCP.send(socket, payload <> "\n") do
+    case TCP.send(socket, payload <> <<0, 0>>) do
       :ok ->
         case recv_all(socket) do
           {:ok, data}         ->
+            IO.inspect data
             {:reply, {:ok, Poison.decode!(data)}, state}
 
           {:error, _} = error ->
@@ -111,14 +111,15 @@ defmodule ExSync.JSONDPSocketAdapter do
       {:reply, {:ok, %{"result" => "pong"}}, state} ->
         {:noreply, state}
 
-      _other ->
+      other ->
+        IO.inspect other
         {:disconnect, {:error, :ping_failed}, state}
     end
   end
 
   defp recv_all(socket, data \\ "") do
-    case String.slice(data, -1, 1) do
-      "\n" -> {:ok, data}
+    case String.slice(data, -2, 2) do
+      <<0, 0>> -> {:ok, String.slice(data, 0..-3)}
       _else ->
         case TCP.recv(socket, 0, @recv_timeout) do
           {:ok, new_data} -> recv_all(socket, data <> new_data)
