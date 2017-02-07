@@ -6,12 +6,10 @@ defmodule ExSync.Store do
 
   @type error :: atom
 
-  use Behaviour
-
   @doc """
   Retrieves the document from the store by its ID.
   """
-  defcallback get(String.t) :: Map.t
+  @callback get(String.t) :: Map.t
 
   @doc """
   Similarly to the Elixir `get_and_update/2` function (e.g. in Access, Agent,
@@ -22,5 +20,5 @@ defmodule ExSync.Store do
   changing between the read and the write command will cause trouble that is
   extremely painful to track down.**
   """
-  defcallback get_and_update(any, fun) :: {:ok | Map.t} | {:error | error}
+  @callback get_and_update(any, fun) :: {:ok | Map.t} | {:error | error}
 end

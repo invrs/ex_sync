@@ -76,7 +76,7 @@ defmodule ExSync do
   an updated server_version number (if applicable).
   """
   def get_server_doc_edits(server_shadow, doc) do
-    case diff_patch.diff(server_shadow.doc, doc) do
+    case diff_patch().diff(server_shadow.doc, doc) do
       {:ok, diff} -> format_diff(diff, server_shadow)
       error       -> error
     end
@@ -98,7 +98,7 @@ defmodule ExSync do
 
   @doc false
   defp apply_server_doc_edits(doc, [edit | edits]) do
-    case diff_patch.patch(doc, edit["diff"]) do
+    case diff_patch().patch(doc, edit["diff"]) do
       # Patch succesfull
       {:ok, new_doc} ->
         apply_server_doc_edits new_doc, edits
@@ -157,7 +157,7 @@ defmodule ExSync do
     end
   end
   defp patch_shadow_edits(server_shadow, backup_shadow, edit, edits) do
-    case diff_patch.patch(server_shadow.doc, edit["diff"]) do
+    case diff_patch().patch(server_shadow.doc, edit["diff"]) do
       {:ok, new_doc} ->
         server_shadow =
           server_shadow

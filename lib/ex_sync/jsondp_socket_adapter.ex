@@ -16,9 +16,12 @@ defmodule ExSync.JSONDPSocketAdapter do
   end
 
   defp rpc(method, params, retry_count, socket) do
-    GenServer.call(socket, {:send, method, params}, 100_000)
-    |> handle
-    |> case do
+    response =
+      socket
+      |> GenServer.call({:send, method, params}, 100_000)
+      |> handle
+
+    case response do
       result = {:ok, _}           -> result
       _error when retry_count < 5 -> rpc(method, params, retry_count + 1, socket)
       error                       -> error
@@ -43,7 +46,7 @@ defmodule ExSync.JSONDPSocketAdapter do
 
   def start_link(supervisor_opts \\ [], connection_opts \\ []) do
     opts = Keyword.put_new(connection_opts, :timeout, @conn_timeout)
-    args = Tuple.append(get_address, opts)
+    args = Tuple.append(get_address(), opts)
 
     Connection.start_link(__MODULE__, args, supervisor_opts)
   end
