@@ -5,7 +5,7 @@ defmodule ExSync.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      supervisor(ExSync.diff_patch, [])
+      supervisor(ExSync.diff_patch(), [])
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]

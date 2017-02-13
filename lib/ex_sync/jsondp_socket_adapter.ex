@@ -1,4 +1,4 @@
-defmodule DiffSync.JSONDPSocketAdapter do
+defmodule ExSync.JSONDPSocketAdapter do
   use Connection
 
   alias :gen_tcp, as: TCP
@@ -16,9 +16,12 @@ defmodule DiffSync.JSONDPSocketAdapter do
   end
 
   defp rpc(method, params, retry_count, socket) do
-    GenServer.call(socket, {:send, method, params}, 100_000)
-    |> handle
-    |> case do
+    response =
+      socket
+      |> GenServer.call({:send, method, params}, 100_000)
+      |> handle
+
+    case response do
       result = {:ok, _}           -> result
       _error when retry_count < 5 -> rpc(method, params, retry_count + 1, socket)
       error                       -> error
@@ -43,7 +46,7 @@ defmodule DiffSync.JSONDPSocketAdapter do
 
   def start_link(supervisor_opts \\ [], connection_opts \\ []) do
     opts = Keyword.put_new(connection_opts, :timeout, @conn_timeout)
-    args = Tuple.append(get_address, opts)
+    args = Tuple.append(get_address(), opts)
 
     Connection.start_link(__MODULE__, args, supervisor_opts)
   end
@@ -90,11 +93,13 @@ defmodule DiffSync.JSONDPSocketAdapter do
         params: params
       }
 
-    case TCP.send(socket, payload <> <<0, 0>>) do
+
+    payload = << byte_size(payload) :: 32 >> <>  payload <> << 0, 0>>
+
+    case TCP.send(socket, payload) do
       :ok ->
         case recv_all(socket) do
           {:ok, data}         ->
-            IO.inspect data
             {:reply, {:ok, Poison.decode!(data)}, state}
 
           {:error, _} = error ->
@@ -117,14 +122,16 @@ defmodule DiffSync.JSONDPSocketAdapter do
     end
   end
 
-  defp recv_all(socket, data \\ "") do
-    case String.slice(data, -2, 2) do
-      <<0, 0>> -> {:ok, String.slice(data, 0..-3)}
-      _else ->
-        case TCP.recv(socket, 0, @recv_timeout) do
-          {:ok, new_data} -> recv_all(socket, data <> new_data)
-          error           -> error
-        end
+  defp recv_all(socket) do
+    with {:ok, << size :: 32 >>} <- TCP.recv(socket, 4, @recv_timeout),
+         {:ok, data}             <- TCP.recv(socket, size, @recv_timeout),
+         {:ok, << 0, 0 >>}       <- TCP.recv(socket, 2, @recv_timeout)
+    do
+      {:ok, data}
+    else
+      other ->
+        Logger.error "JSONDP recv failed: #{inspect other}"
+        {:error, :recv_error}
     end
   end
 
