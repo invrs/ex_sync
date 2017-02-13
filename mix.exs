@@ -3,7 +3,7 @@ defmodule ExSync.Mixfile do
 
   def project do
     [app: :ex_sync,
-     version: "0.0.3",
+     version: "0.0.4",
      elixir: "~> 1.2",
      description: description(),
      package: package(),
