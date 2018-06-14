@@ -145,6 +145,10 @@ defmodule ExSync do
 
       # Not ideal, but we already saw this client version. Throw away edit.
       server_shadow.client_version > edit["localVersion"] ->
+        "Edit server version (#{inspect edit["localVersion"]}) " <>
+        "behind server shadow client version "                   <>
+        "(#{inspect server_shadow.client_version}). Dropping edit..."
+        |> Logger.warn()
         apply_shadow_edits server_shadow, backup_shadow, edits
 
       true ->
